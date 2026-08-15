@@ -31,7 +31,7 @@
         android:usesCleartextTraffic="false">
 
         <!--
-          MainActivity berbasis WebView -- pengganti LauncherActivity (TWA).
+          MainActivity berbasis WebView, pengganti LauncherActivity (TWA).
           Ini satu-satunya activity utama sekarang.
         -->
         <activity
@@ -48,7 +48,7 @@
 
         </activity>
 
-        <!-- FileProvider dipertahankan -- berguna kalau nanti WebView perlu
+        <!-- FileProvider dipertahankan, berguna kalau nanti WebView perlu
              fitur upload file/gambar dari dalam halaman chat -->
         <provider
             android:name="androidx.core.content.FileProvider"
