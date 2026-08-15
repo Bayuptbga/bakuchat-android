@@ -10,8 +10,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.bakuchat.id">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Wajib untuk WebView mengakses internet -->
     <uses-permission android:name="android.permission.INTERNET" />
