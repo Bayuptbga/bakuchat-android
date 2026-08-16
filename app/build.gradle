@@ -18,6 +18,7 @@ import groovy.xml.MarkupBuilder
 
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
 def twaManifest = [
@@ -210,4 +211,8 @@ dependencies {
     
         implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.6.2'
     
+
+    // Ditambahkan untuk Firebase Cloud Messaging (push notification native)
+    implementation platform('com.google.firebase:firebase-bom:33.7.0')
+    implementation 'com.google.firebase:firebase-messaging'
 }
