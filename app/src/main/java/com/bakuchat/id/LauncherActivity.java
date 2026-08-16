@@ -20,10 +20,13 @@
 package com.bakuchat.id;
 
 import android.content.pm.ActivityInfo;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
+
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class LauncherActivity
         extends com.google.androidbrowserhelper.trusted.LauncherActivity {
@@ -50,6 +53,19 @@ public class LauncherActivity
         } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         }
+
+        // ==== 3. Ambil token FCM terbaru (buat push notification native) ====
+        // Ini async -- hasilnya dipakai di LAUNCH BERIKUTNYA (disimpan ke
+        // SharedPreferences), bukan launch saat ini, karena getLaunchingUrl()
+        // di bawah butuh return value langsung/synchronous.
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if (task.isSuccessful() && task.getResult() != null) {
+                getSharedPreferences("bakuchat_prefs", MODE_PRIVATE)
+                        .edit()
+                        .putString("fcm_token", task.getResult())
+                        .apply();
+            }
+        });
     }
 
     @Override
@@ -66,9 +82,20 @@ public class LauncherActivity
 
     @Override
     protected Uri getLaunchingUrl() {
-        // Get the original launch Url. Tidak dimodifikasi -- placeholder
-        // resmi dari template Bubblewrap kalau nanti perlu inject query
-        // param tambahan sebelum TWA dibuka.
-        return super.getLaunchingUrl();
+        Uri original = super.getLaunchingUrl();
+
+        // Sisipkan token FCM (kalau sudah pernah tersimpan dari launch
+        // sebelumnya) sebagai query param, supaya web app bisa baca lewat
+        // URLSearchParams dan simpan ke Supabase untuk user yang lagi login.
+        SharedPreferences prefs = getSharedPreferences("bakuchat_prefs", MODE_PRIVATE);
+        String token = prefs.getString("fcm_token", null);
+
+        if (token == null || token.isEmpty()) {
+            return original;
+        }
+
+        return original.buildUpon()
+                .appendQueryParameter("fcm_token", token)
+                .build();
     }
 }
