@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "352678532150",
+    "project_id": "bakuchat-f0533",
+    "storage_bucket": "bakuchat-f0533.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:352678532150:android:7741986962f184c0807497",
+        "android_client_info": {
+          "package_name": "com.bakuchat.id"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVagzk8JaGbNbApZg1yogeLPS4IOhebQc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
